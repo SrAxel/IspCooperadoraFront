@@ -1,15 +1,5 @@
 export default async function handler(req, res) {
-  /* const { method } = req;
-
-  if (method === "GET") {
-    try {
-      const response = await fetch("http://localhost:2003/alumnos");
-      const data = await response.json();
-      res.status(200).json(data);
-    } catch (error) {
-      res.status(500).json({ error: "Error al obtener los datos" });
-    }
-  }*/
+  
   const { method } = req;
   const { limit } = req.query; // Obtener el parámetro de consulta 'limit'
 
@@ -74,7 +64,7 @@ export default async function handler(req, res) {
   }
 }
 
-/*if(method === 'PUT'){
+
   const id = req.body;
     try {
       const response = await fetch(`http://localhost:2003/alumnos/${id}`, {

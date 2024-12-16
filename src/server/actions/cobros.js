@@ -1,7 +1,3 @@
-// esta función CobrosFormActionHandler se utiliza para enviar datos de un formulario
-// de estudiante a una API en un servidor Next.js, esperar la respuesta del servidor y
-// devolverla.
-
 "use server";
 
 export const CobrosFormActionHandler = async (formData) => {

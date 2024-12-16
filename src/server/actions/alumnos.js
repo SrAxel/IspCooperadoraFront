@@ -18,7 +18,7 @@ export const StudientFormActionHandler = async (formData) => {
 
   const response = await fetch("http://localhost:3000/api/alumnos", {
     method: "POST",
-    body: JSON.stringify(data), // mandamos los datos del formulario
+    body: JSON.stringify(data), 
   });
 
   const result = await response.json();

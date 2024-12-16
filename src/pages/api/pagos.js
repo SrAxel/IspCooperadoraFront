@@ -1,15 +1,4 @@
 export default async function handler(req, res) {
-  /* const { method } = req;
-
-  if (method === "GET") {
-    try {
-      const response = await fetch("http://localhost:3000/pagos");
-      const data = await response.json();
-      res.status(200).json(data);
-    } catch (error) {
-      res.status(500).json({ error: "Error al obtener los datos" });
-    }
-  }*/
 
   const { method } = req;
   const { limit } = req.query; // Obtener el parámetro de consulta 'limit'
@@ -36,14 +25,6 @@ export default async function handler(req, res) {
       res.status(500).json({ error: "Error al obtener los datos" });
     }
   }
-
-  //if (method === "POST") {
-  //  const data = JSON.parse(req.body);
-  // console.log(data);
-  // res.status(200).json({ message: "ok", data });
-  // } else {
-  //  res.status(405).json({ error: "Método no permitido" });
-  //}
 
   // se verifica si la solicitud es de tipo POST.
   // primero se analiza el cuerpo de la solicitud (req.body) utilizando JSON.parse()
@@ -105,34 +86,3 @@ export default async function handler(req, res) {
     }
   }
 }
-
-/*if (method === "PUT") {
-    try {
-      const data = JSON.parse(req.body);
-      // Fetch a backend con metodo PUT
-      const response = await fetch("http://localhost:2003/pagos", {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const responseData = await response.json();
-      res.send(responseData);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  }*/
-
-/*if(method === 'PUT'){
-      const id = req.body;
-        try {
-          const response = await fetch(`http://localhost:2003/cobros/${id}`, {
-            method: 'PUT'
-          });
-          const responseData = await response.json();
-          res.send(responseData);
-        } catch (error) {
-          res.status(500).send(error);
-        }
-      }*/

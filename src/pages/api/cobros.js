@@ -54,22 +54,4 @@ export default async function handler(req, res) {
     }
   }
 
-  /*if (method === "PUT") {
-    try {
-      const id = JSON.parse(req.body); // Obtenemos todos los datos para actualizar
-
-      const response = await fetch(`http://localhost:2003/cobros/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(id), // Enviamos todos los datos del cobro
-      });
-
-      const responseData = await response.json();
-      res.status(200).json(responseData);
-    } catch (error) {
-      res.status(500).json({ error: "Error al actualizar el cobro" });
-    }
-  }*/
 }

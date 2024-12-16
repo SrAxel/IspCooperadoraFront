@@ -9,4 +9,4 @@ describe("TestComponent Tests", () => {
       await screen.findByText("Alumno Form Component")
     ).toBeInTheDocument();
   });
-}); // TestComponent Tests
+});
