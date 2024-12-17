@@ -5,7 +5,7 @@ export default async function handler(req, res) {
 
   if (method === "GET") {
     try {
-      const response = await fetch("http://localhost:3000/pagos");
+      const response = await fetch("http://localhost:2003/pagos");
       const data = await response.json();
 
       let pagos;

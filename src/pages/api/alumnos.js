@@ -63,16 +63,3 @@ export default async function handler(req, res) {
     }
   }
 }
-
-
-  const id = req.body;
-    try {
-      const response = await fetch(`http://localhost:2003/alumnos/${id}`, {
-        method: 'PUT'
-      });
-      const responseData = await response.json();
-      res.send(responseData);
-    } catch (error) {
-      res.status(500).send(error);
-    }
-  

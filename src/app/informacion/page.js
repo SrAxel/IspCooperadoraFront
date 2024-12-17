@@ -1,7 +1,5 @@
-import Link from "next/link";
 import React from "react";
-import "./page.css";
-
+import "./informacion.css"
 const Informacion = () => {
   return (
     <div className="contenedor-nosotros">
@@ -18,9 +16,9 @@ const Informacion = () => {
             href="https://isp20.edu.ar/nuevo/#"
             target="_blank"
             rel="noopener noreferrer"
-            className="link-instituto"
+            aria-label="Visitar el sitio web del Instituto ISP N20"
           >
-            Visita la página del Instituto N20 <span className="nuevo-icon">🡆</span>
+            Visita la página del Instituto N20
           </a>
         </p>
       </div>

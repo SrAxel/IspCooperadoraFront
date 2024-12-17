@@ -8,14 +8,12 @@ import {
 
 // Estilos
 const styles = StyleSheet.create({
-  // Página principal
   page: {
     flexDirection: "column",
     backgroundColor: "#f4f4f4",
     padding: 20,
     fontFamily: "Helvetica",
   },
-  // Encabezado principal
   header: {
     fontSize: 20,
     marginBottom: 20,
@@ -23,7 +21,6 @@ const styles = StyleSheet.create({
     color: "#333",
     fontWeight: "bold",
   },
-  // Información personal del alumno
   personalInfo: {
     marginBottom: 20,
     padding: 10,
@@ -36,7 +33,6 @@ const styles = StyleSheet.create({
     color: "#555",
     marginBottom: 5,
   },
-  // Tabla de pagos
   table: {
     display: "table",
     width: "100%",
@@ -45,14 +41,14 @@ const styles = StyleSheet.create({
     borderColor: "#ddd",
     marginTop: 10,
   },
+  tableRow: {
+    flexDirection: "row",
+    backgroundColor: "#f9f9f9",
+  },
   tableHeaderRow: {
     flexDirection: "row",
     backgroundColor: "#333",
     color: "#fff",
-  },
-  tableRow: {
-    flexDirection: "row",
-    backgroundColor: "#f9f9f9",
   },
   tableCol: {
     width: "33.33%",
@@ -79,7 +75,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#888",
   },
-  // Resumen de pagos
   resumenPagos: {
     marginTop: 20,
     paddingTop: 10,
@@ -117,23 +112,18 @@ const styles = StyleSheet.create({
   },
 });
 
-// Componente principal para el reporte PDF
+// Componente Document
 const PdfReport = ({ alumno }) => {
-  // Si el alumno no existe, retornar null
   if (!alumno) {
-    return null; 
+    return null; // Maneja el caso donde 'alumno' es undefined o null
   }
 
   return (
     <Document>
-      {/* Página principal */}
       <Page size="A3" style={styles.page}>
-        {/* Título principal */}
         <Text style={styles.header}>
           Reporte de Pagos de {alumno.nombre} {alumno.apellido}
         </Text>
-
-        {/* Información personal */}
         <View style={styles.personalInfo}>
           <Text style={styles.infoText}>Nombre: {alumno.nombre}</Text>
           <Text style={styles.infoText}>Apellido: {alumno.apellido}</Text>
@@ -148,10 +138,7 @@ const PdfReport = ({ alumno }) => {
             Fecha de Ingreso: {formatDate(alumno.fecha_ingreso)}
           </Text>
         </View>
-
-        {/* Tabla de pagos */}
         <View style={styles.table}>
-          {/* Encabezado de tabla */}
           <View style={styles.tableHeaderRow}>
             <View style={styles.tableCol}>
               <Text style={styles.tableCellT}>Fecha</Text>
@@ -166,8 +153,6 @@ const PdfReport = ({ alumno }) => {
               <Text style={styles.tableCellT}>Estado</Text>
             </View>
           </View>
-
-          {/* Filas de pagos */}
           {alumno.pagos && alumno.pagos.length > 0 ? (
             alumno.pagos.map((pago, index) => (
               <View style={styles.tableRow} key={index}>
@@ -201,8 +186,6 @@ const PdfReport = ({ alumno }) => {
             <Text style={styles.noDataText}>No hay pagos registrados.</Text>
           )}
         </View>
-
-        {/* Resumen de pagos */}
         <View style={styles.resumenPagos}>
           <Text style={styles.resumenHeader}>RESUMEN DE PAGOS:</Text>
           <View style={styles.resumenList}>
@@ -231,5 +214,4 @@ const PdfReport = ({ alumno }) => {
   );
 };
 
-// Exportar el componente
 export default PdfReport;

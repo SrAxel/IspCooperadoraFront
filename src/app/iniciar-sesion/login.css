@@ -1,59 +1,116 @@
+:root {
+  --primary-color: #007bff; /* Azul principal para el botón */
+  --primary-hover-color: #0056b3; /* Azul oscuro cuando se pasa el mouse */
+  --text-color-light: #ffffff; /* Color de texto claro */
+  --input-border-color: #ccc; /* Color de borde de los inputs */
+  --input-focus-border-color: #007bff; /* Color de borde de los inputs al estar enfocados */
+  --background-color: #f0f4f8; /* Fondo de la página */
+  --box-background-color: #8D85C1; /* Fondo de la caja de login */
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra más suave */
+  --error-color: #e74c3c; /* Color rojo para los mensajes de error */
+}
+
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: var(--background-color);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  background-color: #f1f1f1;
+  height: 100vh;
+  background-color: var(--background-color);
 }
 
 .login-box {
-  background-color: #fff;
+  background-color: var(--box-background-color);
   padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
+  box-shadow: var(--box-shadow);
+  max-width: 400px;
+  width: 100%;
 }
 
-h1 {
+.login-box h1 {
+  border-bottom: 1px solid #ece8e8;
   text-align: center;
+  color: var(--text-color-light);
   margin-bottom: 20px;
-  color: #004d40;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.login-box form {
+  display: flex;
+  flex-direction: column;
 }
 
 .container-input {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
-.container-input label {
-  display: block;
-  font-weight: bold;
+.login-box label {
   margin-bottom: 5px;
+  color: #ffffff;
+  font-size: 14px;
 }
 
-.container-input input {
-  width: 100%;
+.login-box input {
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-bottom: 15px;
+  border: 1px solid var(--input-border-color);
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 16px;
+  color: #00487e;
+  transition: border-color 0.3s ease;
 }
 
-button {
-  width: 100%;
+.login-box input:focus {
+  border-color: var(--input-focus-border-color);
+  outline: none;
+}
+
+.login-box button {
   padding: 10px;
-  background-color: #004d40;
+  background-color: var(--primary-color);
   color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  font-size: 16px;
 }
 
-button:hover {
-  background-color: #003d2b;
+.login-box button:hover {
+  background-color: var(--primary-hover-color);
 }
 
-.error-message {
-  color: red;
+.login-box p {
+  color: var(--error-color);
+  text-align: center;
   font-size: 14px;
   margin-top: 10px;
+}
+
+.forgot-password {
+  font-size: 14px;
+  color: var(--primary-color);
+  text-decoration: none;
+  margin-top: 15px;
   text-align: center;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
 }

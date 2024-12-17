@@ -13,26 +13,11 @@ import {
   formatNumberToCurrency,
 } from "@/utils/format-helpers";
 
-// Variables de estilo
-const colors = {
-  erieBlack: "#1C2321",
-  jungleGreen: "#49A078",
-  jungleGreenHover: "#1b6b45",
-  antiFlashWhite: "#EEEEEE",
-  tropicalIndigo: "#8D85C1",
-  tropicalIndigoHover: "#7a68f1",
-  periwinkle: "#D4CDF4",
-  vistaBlue: "#72A1E5",
-  poppyRed: "#DF2935",
-  safetyOrange: "#EC7505",
-  grisClaro: "#dcddf3",
-};
-
 // Estilos
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
-    backgroundColor: colors.periwinkle,
+    backgroundColor: "white",
     padding: 20,
   },
   headerContainer: {
@@ -47,75 +32,79 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 26,
-    color: colors.erieBlack,
-    fontWeight: "bold",
+    color: "grey",
   },
   headerNombre: {
     textAlign: "center",
     marginTop: 5,
-    fontSize: 20,
-    color: colors.tropicalIndigo,
+    fontSize: 26,
+    color: "grey",
   },
   institutionInfo: {
     marginBottom: 20,
     textAlign: "center",
-    color: colors.erieBlack,
   },
   logo: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     marginRight: 10,
   },
   personalInfo: {
     marginBottom: 20,
-    backgroundColor: colors.antiFlashWhite,
-    padding: 10,
-    borderRadius: 8,
-    border: `1 solid ${colors.tropicalIndigo}`,
+  },
+  infoText: {
+    fontSize: 12,
+    marginBottom: 20,
   },
   infoTexto: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
-    color: colors.erieBlack,
+    marginBottom: 5,
   },
   table: {
     display: "table",
     width: "auto",
-    border: `1 solid ${colors.tropicalIndigo}`,
-    borderRadius: 8,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "#bfbfbf",
+    borderRightWidth: 0,
+    borderBottomWidth: 0,
   },
   tableHeaderRow: {
     flexDirection: "row",
-    backgroundColor: colors.tropicalIndigo,
-    color: colors.antiFlashWhite,
+    backgroundColor: "#f0f0f0",
   },
   tableRow: {
     flexDirection: "row",
-    backgroundColor: colors.grisClaro,
   },
   tableCol: {
     width: "33.33%",
-    border: `1 solid ${colors.tropicalIndigo}`,
-    padding: 5,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "#bfbfbf",
+    borderLeftWidth: 0,
+    borderTopWidth: 0,
   },
   tableCellT: {
     margin: "auto",
-    fontSize: 14,
+    marginTop: 5,
+    fontSize: 16,
     fontWeight: "bold",
   },
   tableCell: {
     margin: "auto",
-    fontSize: 12,
+    marginTop: 10,
+    fontSize: 14,
   },
   total: {
     marginTop: 20,
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: "extraBold",
     textAlign: "right",
-    color: colors.jungleGreen,
+    marginRight: 30,
   },
   signature: {
-    marginTop: 50,
+    marginTop: 80,
     flexDirection: "row",
     justifyContent: "space-between",
   },
@@ -123,17 +112,20 @@ const styles = StyleSheet.create({
     width: "45%",
     textAlign: "center",
     borderTop: 1,
-    borderColor: colors.erieBlack,
+    borderColor: "#000",
     paddingTop: 5,
   },
 });
 
+// Componente PdfRecibo
 const PdfRecibo = ({ alumno, pago }) => {
-  if (!alumno || !pago) return null;
+  if (!alumno || !pago) {
+    return null; // Maneja el caso donde 'alumno' o 'pago' es undefined o null
+  }
 
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size="A3" style={styles.page}>
         <View style={styles.headerContainer}>
           <Image style={styles.logo} src="/logo-isp.png" />
           <View style={styles.headerTextContainer}>
@@ -144,9 +136,11 @@ const PdfRecibo = ({ alumno, pago }) => {
           </View>
         </View>
         <View style={styles.institutionInfo}>
-          <Text>Bv. Patria, Bv. Libertad y calle las Magnolias</Text>
-          <Text>Teléfono: (54)9 3498 4526026</Text>
-          <Text>Email: secretariaisp20@gmail.com</Text>
+          <Text style={styles.infoText}>
+            Bv. Patria, Bv. Libertad y calle las Magnolias
+          </Text>
+          <Text style={styles.infoText}>Teléfono: (54)9 3498 4526026</Text>
+          <Text style={styles.infoText}>Email: secretariaisp20@gmail.com</Text>
         </View>
         <View style={styles.personalInfo}>
           <Text style={styles.infoTexto}>
@@ -188,9 +182,7 @@ const PdfRecibo = ({ alumno, pago }) => {
         </View>
         <Text style={styles.total}>
           Total:{" "}
-          {pago.cobro_id
-            ? formatNumberToCurrency(pago.cobro_id.monto)
-            : "N/A"}
+          {pago.cobro_id ? formatNumberToCurrency(pago.cobro_id.monto) : "N/A"}
         </Text>
         <View style={styles.signature}>
           <View style={styles.signatureBox}>
