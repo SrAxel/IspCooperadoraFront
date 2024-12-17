@@ -3,6 +3,8 @@ import "./showAlumnosInicio.css";
 
 export default function ShowAlumno() {
   const [alumnos, setAlumnos] = useState([]);
+  const [loading, setLoading] = useState(true); // Para manejar el estado de carga
+  const [error, setError] = useState(null); // Para manejar errores
 
   useEffect(() => {
     const fetchAlumnos = async () => {
@@ -13,6 +15,9 @@ export default function ShowAlumno() {
         setAlumnos(data);
       } catch (error) {
         console.error("Error al obtener los alumnos:", error);
+        setError("No se pudieron cargar los alumnos.");
+      } finally {
+        setLoading(false); // Finaliza la carga
       }
     };
 
@@ -22,6 +27,8 @@ export default function ShowAlumno() {
   return (
     <div className="contenedor-alumnos-ultimos">
       <h1>Últimos Alumnos Creados</h1>
+      {loading && <p>Cargando...</p>}
+      {error && <p className="error">{error}</p>}
       <ul>
         {alumnos.map((alumno) => (
           <li key={alumno._id}>
@@ -32,6 +39,7 @@ export default function ShowAlumno() {
           </li>
         ))}
       </ul>
+      {alumnos.length === 0 && !loading && <p>No se encontraron alumnos.</p>}
     </div>
   );
 }

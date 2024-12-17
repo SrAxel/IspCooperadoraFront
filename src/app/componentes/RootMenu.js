@@ -6,28 +6,33 @@ import { signOut } from "next-auth/client";
 
 const RootMenu = () => {
   const pathname = usePathname();
+
+  const menuItems = [
+    { href: "/", label: "Inicio" },
+    { href: "/alumnos", label: "Alumnos" },
+    { href: "/cobros", label: "Cobros" },
+    { href: "/informacion", label: "Información" },
+  ];
+
   return (
     <div className="layout-menu">
-      <h1 className="menu-titulo">Cooperadora ISP N20 </h1>
+      <h1 className="menu-titulo">Cooperadora ISP N20</h1>
       <ul className="mt-3">
-        <li className={`item-menu ${pathname === "/" ? "active" : ""}`}>
-          <Link href="/">Inicio </Link>
-        </li>
-        <li className={`item-menu ${pathname === "/alumnos" ? "active" : ""}`}>
-          <Link href="/alumnos">Alumnos</Link>
-        </li>
-        <li className={`item-menu ${pathname === "/cobros" ? "active" : ""}`}>
-          <Link href="/cobros">Cobros</Link>
-        </li>
-        <li
-          className={`item-menu ${pathname === "/informacion" ? "active" : ""}`}
-        >
-          <Link href="/informacion">Información</Link>
-        </li>
+        {menuItems.map(({ href, label }) => (
+          <li
+            key={href}
+            className={`item-menu ${pathname === href ? "active" : ""}`}
+          >
+            <Link href={href} aria-current={pathname === href ? "page" : undefined}>
+              {label}
+            </Link>
+          </li>
+        ))}
         <li>
           <button
             className="logout-button"
             onClick={() => signOut({ callbackUrl: "/iniciar-sesion" })}
+            aria-label="Cerrar sesión"
           >
             Cerrar sesión
           </button>

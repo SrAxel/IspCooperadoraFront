@@ -5,31 +5,28 @@ import { useEffect, useState, useRef } from "react";
 import Swal from "sweetalert2";
 
 export default function EditarPagoForm({ params, handler, pagos }) {
-  const { id, pagoId } = params; // id del alumno y el pago
+  const { id, pagoId } = params; // ID del alumno y pago
   const [alumno, setAlumno] = useState(null);
   const [pago, setPago] = useState(null);
-
-  const [pagosState, setPagosState] = useState(pagos);
+  const [loading, setLoading] = useState(false); // Indicador de carga
 
   const formRef = useRef(null);
 
   useEffect(() => {
     const fetchAlumnoYPago = async () => {
       try {
-        // Obtener datos del alumno
-        const alumnoResponse = await fetch(
-          `http://localhost:3000/api/alumnos/${id}`
-        );
-        if (!alumnoResponse.ok) throw new Error("Alumno request failed");
-        const alumnoData = await alumnoResponse.json();
-        setAlumno(alumnoData);
+        const [alumnoResponse, pagoResponse] = await Promise.all([
+          fetch(`http://localhost:3000/api/alumnos/${id}`),
+          fetch(`http://localhost:3000/api/pagos/${pagoId}`),
+        ]);
 
-        // Obtener el pago correspondiente al alumno
-        const pagoResponse = await fetch(
-          `http://localhost:3000/api/pagos/${pagoId}`
-        );
-        if (!pagoResponse.ok) throw new Error("Pago request failed");
+        if (!alumnoResponse.ok || !pagoResponse.ok)
+          throw new Error("Error en la solicitud");
+
+        const alumnoData = await alumnoResponse.json();
         const pagoData = await pagoResponse.json();
+
+        setAlumno(alumnoData);
         setPago(pagoData);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -39,25 +36,41 @@ export default function EditarPagoForm({ params, handler, pagos }) {
     fetchAlumnoYPago();
   }, [id, pagoId]);
 
-  const efectuarPago = async (pagoId) => {
-    const pagosModificados = pagosState.map((pago) => {
-      if (pago._id === data._id) {
-        pago.pagado = true;
-      }
+  const efectuarPago = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`/api/pagos/${pagoId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pagado: true }),
+      });
 
-      return pago;
-    });
-    setPagosState(pagosModificados);
+      if (!response.ok) throw new Error("Error al efectuar el pago");
+
+      setPago({ ...pago, pagado: true });
+      Swal.fire({
+        title: "Pago actualizado",
+        text: "El pago ha sido marcado como pagado con éxito.",
+        icon: "success",
+        confirmButtonColor: "#d33",
+        confirmButtonText: "VOLVER",
+      }).then(() => {
+        window.location.href = `/alumnos/${id}`;
+      });
+    } catch (error) {
+      Swal.fire("Error", "Hubo un problema al actualizar el pago.", "error");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const formAction = async (formData) => {
     try {
       const response = await handler(formData, alumno, pago);
-
       if (response && response._id) {
         Swal.fire({
           title: "Pago actualizado",
-          text: `El pago ha sido marcado como pagado con éxito.`,
+          text: `El pago ha sido actualizado con éxito.`,
           icon: "success",
           confirmButtonColor: "#d33",
           confirmButtonText: "VOLVER",
@@ -66,7 +79,7 @@ export default function EditarPagoForm({ params, handler, pagos }) {
         });
       }
     } catch (error) {
-      alert("Hubo un error. Intente nuevamente");
+      alert("Hubo un error. Intente nuevamente.");
     }
   };
 
@@ -76,67 +89,55 @@ export default function EditarPagoForm({ params, handler, pagos }) {
 
   return alumno && pago ? (
     <div className="contenedor-selector">
-      <div>
-        <form
-          ref={formRef}
-          action={formAction}
-          className="max-w-xl mt-4 bg-[--tropical-indigo] mx-auto p-8 rounded-lg border-2 border-violet-400 shadow-lg"
-        >
-          <h2 className="text-white font-bold text-xl mb-4">Editar Pago</h2>
-          <div className="mb-4">
-            <label htmlFor="alumno" className="block text-white font-bold">
-              Alumno
-            </label>
-            <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-200">
-              {`${alumno.nombre} ${alumno.apellido}`}
-            </div>
-            <input type="hidden" name="alumno_id" value={alumno._id} />
+      <form
+        ref={formRef}
+        action={formAction}
+        className="max-w-xl mt-4 bg-[--tropical-indigo] mx-auto p-8 rounded-lg border-2 border-violet-400 shadow-lg"
+      >
+        <h2 className="text-white font-bold text-xl mb-4">Editar Pago</h2>
+        <div className="mb-4">
+          <label className="block text-white font-bold">Alumno</label>
+          <div className="bg-gray-200 shadow border rounded w-full py-2 px-3 text-gray-700">
+            {`${alumno.nombre} ${alumno.apellido}`}
           </div>
-          <div className="mb-4">
-            <label htmlFor="cobro" className="block text-white font-bold">
-              Cobro
-            </label>
-            <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-200">
-              {pago.cobro_id.titulo}
-            </div>
-            <input
-              type="hidden"
-              name="fechaCreacion"
-              value={pago.fechaCreacion}
-            />
+        </div>
+        <div className="mb-4">
+          <label className="block text-white font-bold">Cobro</label>
+          <div className="bg-gray-200 shadow border rounded w-full py-2 px-3 text-gray-700">
+            {pago.cobro_id.titulo}
           </div>
-          <div className="mb-4">
-            <label htmlFor="fecha" className="block text-white font-bold">
-              Fecha
-            </label>
-            <div className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-200">
-              {formatDate(pago.fechaCreacion)}
-            </div>
+        </div>
+        <div className="mb-4">
+          <label className="block text-white font-bold">Fecha</label>
+          <div className="bg-gray-200 shadow border rounded w-full py-2 px-3 text-gray-700">
+            {formatDate(pago.fechaCreacion)}
           </div>
+        </div>
 
-          <div className="flex">
-            <div className="flex items-center justify-center mr-8">
-              <button
-                disabled={pago.pagado}
-                onClick={() => efectuarPago(pago._id)}
-              >
-                Abonar
-              </button>
-            </div>
-            <div className="flex items-center justify-center">
-              <button
-                type="button"
-                onClick={OnCancelHandler}
-                className="bg-green-600 mt-4 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+        <div className="flex items-center justify-between">
+          <button
+            type="button"
+            onClick={efectuarPago}
+            disabled={pago.pagado || loading}
+            className={`mt-4 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+              pago.pagado || loading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-700"
+            }`}
+          >
+            {loading ? "Procesando..." : pago.pagado ? "Pagado" : "Abonar"}
+          </button>
+          <button
+            type="button"
+            onClick={OnCancelHandler}
+            className="bg-green-600 mt-4 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
     </div>
   ) : (
-    <p>Cargando...</p>
+    <p className="text-center text-white font-bold">Cargando...</p>
   );
 }

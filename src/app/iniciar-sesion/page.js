@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn } from "next-auth/client"; // Importa desde next-auth/client en v3
+import { signIn } from "next-auth/react"; // Importación correcta en NextAuth v4
 import { useState } from "react";
 import "./login.css"; // Asegúrate de que la ruta sea correcta
 
@@ -19,7 +19,7 @@ const LoginPage = () => {
       password,
     });
 
-    if (result.error) {
+    if (result?.error) {
       setError(result.error); // Mostrar el error en caso de que falle el login
     } else {
       window.location.href = "/"; // Redirige si el login es exitoso
@@ -32,26 +32,28 @@ const LoginPage = () => {
         <h1>Iniciar Sesión</h1>
         <form onSubmit={handleLogin}>
           <div className="container-input">
-            <label>Email:</label>
+            <label htmlFor="email">Email:</label>
             <input
               type="email"
+              id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Correo electrónico"
               required
             />
           </div>
-          <div>
-            <label>Contraseña:</label>
+          <div className="container-input">
+            <label htmlFor="password">Contraseña:</label>
             <input
               type="password"
+              id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Contraseña"
               required
             />
           </div>
-          {error && <p>{error}</p>}
+          {error && <p className="error-message">{error}</p>} {/* Mejor presentación del error */}
           <button type="submit">Iniciar sesión</button>
         </form>
       </div>

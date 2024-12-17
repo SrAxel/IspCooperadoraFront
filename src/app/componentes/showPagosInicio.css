@@ -1,41 +1,55 @@
 .contenedor-ultimos-pagos {
-    padding: 20px;
-    max-width: 800px;
-    margin: 5px auto;
-    background-color: #f4801a;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
+  padding: 20px;
+  max-width: 800px;
+  margin: 5px auto;
+  background-color: #f4801a;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.contenedor-ultimos-pagos h1 {
+  text-align: center;
+  color: #0c0b0b;
+  font-weight: bold;
+}
 
-  
-  .contenedor-ultimos-pagos h1 {
-    text-align: center;
-    color: #0c0b0b;
-    font-weight: bold;
-  }
-  
-  .contenedor-ultimos-pagos ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
+.contenedor-ultimos-pagos ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.contenedor-ultimos-pagos li {
+  background-color: #ffffff;
+  margin: 15px 0; /* Mayor separación entre los elementos */
+  padding: 20px; /* Más espacio interno */
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Más separación entre los elementos internos */
+  flex: 1 1 calc(50% - 40px); /* Más espacio para un diseño flexible */
+}
+
+/* Mejora de contraste en el texto */
+.contenedor-ultimos-pagos p {
+  margin: 0;
+  color: #d32f2f; /* Un tono más claro de rojo */
+}
+
+/* Media query para dispositivos pequeños */
+@media (max-width: 768px) {
   .contenedor-ultimos-pagos li {
-    background-color: #ffffff;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex: 1 1 calc(50% - 20px); /* Ajusta el ancho de los elementos */
+    flex: 1 1 100%; /* 100% del ancho en pantallas pequeñas */
+    margin: 10px 0; /* Menos margen en pantallas pequeñas */
   }
-  
-  .contenedor-ultimos-pagos p {
-    margin: 0;
-    color: #bf360c;
-  }
+}
+
+/* Efecto hover sobre los elementos de la lista */
+.contenedor-ultimos-pagos li:hover {
+  background-color: #f1f1f1;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
