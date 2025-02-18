@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
   if (method === "GET") {
     try {
-      const response = await fetch(`http://localhost:1977/alumnos/${id}`);
+      const response = await fetch(`http://localhost:2003/alumnos/${id}`);
       const data = await response.json();
       res.status(200).json(data);
     } catch (error) {

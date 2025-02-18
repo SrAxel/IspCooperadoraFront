@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
   if (method === "GET") {
     try {
-      const response = await fetch(`http://localhost:1977/pagos/${id}`);
+      const response = await fetch(`http://localhost:2003/pagos/${id}`);
       const data = await response.json();
       res.status(200).json(data);
     } catch (error) {
@@ -16,7 +16,7 @@ export default async function handler(req, res) {
     try {
       const data = JSON.parse(req.body); // Obtenemos los datos para actualizar
 
-      const response = await fetch(`http://localhost:1977/pagos/${id}`, {
+      const response = await fetch(`http://localhost:2003/pagos/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export default async function handler(req, res) {
   // Lógica para el método DELETE
   if (method === "DELETE") {
     try {
-      const response = await fetch(`http://localhost:1977/pagos/${id}`, {
+      const response = await fetch(`http://localhost:2003/pagos/${id}`, {
         method: "DELETE",
       });
 

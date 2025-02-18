@@ -126,6 +126,18 @@ export default function AlumnosPage() {
               scope="col"
               className="px-4 py-1  text-lg font-semibold text-gray-500 "
             ></th>
+            <th
+              scope="col"
+              className="px-4 py-1  text-lg font-semibold text-gray-500 "
+            ></th>
+            <th
+              scope="col"
+              className="px-4 py-1  text-lg font-semibold text-gray-500 "
+            ></th>
+            <th
+              scope="col"
+              className="px-4 py-1  text-lg font-semibold text-gray-500 "
+            ></th>
           </tr>
         </thead>
         <tbody>
